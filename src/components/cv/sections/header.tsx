@@ -107,7 +107,7 @@ export function CVHeader({
             <Image src={avatar} alt={fullName} fill className="object-cover" />
           </div>
         ) : (
-          <div className="w-20 h-20 rounded-lg bg-cv-accent-soft border border-cv flex items-center justify-center text-2xl font-semibold text-cv-accent mb-4 mx-auto">
+          <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-electric-500/20 to-emerald-500/10 border border-electric-500/30 flex items-center justify-center text-2xl font-semibold text-cv-accent mb-4 mx-auto shadow-[0_0_24px_-8px_rgba(10,132,255,0.4)]">
             {fullName
               .split(" ")
               .map((n) => n[0])
@@ -142,7 +142,7 @@ export function CVHeader({
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-1.5 rounded border border-cv text-cv-muted hover:text-cv-accent hover:border-electric-500/50 transition-colors"
+              className="p-1.5 rounded-md border border-cv text-cv-muted hover:text-cv-accent hover:border-electric-500/50 hover:bg-electric-500/10 hover:shadow-[0_0_12px_-4px_rgba(10,132,255,0.4)] transition-all duration-200"
               aria-label={l.label}
             >
               <l.icon className="h-3.5 w-3.5" />
@@ -183,7 +183,7 @@ export function CVHeader({
             </h1>
             <p
               className={cn(
-                "text-cv-accent font-medium mt-1",
+                "text-cv-accent font-medium mt-1 font-mono",
                 variant === "compact" ? "text-sm" : "text-base",
               )}
             >

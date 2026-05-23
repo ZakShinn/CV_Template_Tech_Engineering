@@ -1,12 +1,17 @@
 import type { Resume } from "@/lib/schema/resume";
 import { DEFAULT_SECTION_ORDER } from "@/lib/schema/resume";
+import { appConfig } from "./config";
 
-export const sampleResume: Resume = {
+/**
+ * Dữ liệu CV mặc định — chỉnh nội dung tại file này.
+ * Hướng dẫn chi tiết: src/data/resume.md
+ */
+export const defaultResume: Resume = {
   version: "1.0",
   meta: {
-    layout: "two-column-modern",
-    theme: "dark",
-    locale: "en",
+    layout: appConfig.defaultLayout,
+    theme: appConfig.defaultTheme,
+    locale: "vi",
   },
   personal: {
     fullName: "Alex Nguyen",
@@ -22,7 +27,7 @@ export const sampleResume: Resume = {
       blog: "https://alexnguyen.dev/blog",
       stackoverflow: "https://stackoverflow.com/users/alexnguyen",
     },
-    qrEnabled: true,
+    qrEnabled: appConfig.qrContactEnabled,
   },
   summary:
     "Senior engineer with 8+ years building distributed systems, cloud-native platforms, and developer tooling. Led teams shipping microservices at 10M+ requests/day, cut deployment time by 70% via GitOps, and reduced API p99 latency from 900ms to 120ms. Strong in Go, TypeScript, Kubernetes, and Terraform with a focus on reliability, security, and measurable impact.",
@@ -261,3 +266,6 @@ export const sampleResume: Resume = {
     { name: "Japanese", level: "Basic (JLPT N4)" },
   ],
 };
+
+/** @deprecated Dùng defaultResume — giữ alias để tương thích */
+export const sampleResume = defaultResume;

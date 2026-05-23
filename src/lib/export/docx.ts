@@ -41,6 +41,16 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     new Paragraph({ text: "" }),
   );
 
+  const links = [
+    resume.personal.contact.linkedin,
+    resume.personal.contact.github,
+    resume.personal.contact.portfolio,
+  ].filter(Boolean);
+  if (links.length) {
+    children.push(new Paragraph({ children: [new TextRun(links.join(" | "))] }));
+    children.push(new Paragraph({ text: "" }));
+  }
+
   children.push(
     new Paragraph({ heading: HeadingLevel.HEADING_1, text: "Professional Summary" }),
     new Paragraph({ children: [new TextRun(resume.summary)] }),
@@ -77,12 +87,21 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
         ],
       }),
     );
-    for (const ach of exp.achievements) {
+    if (exp.stack?.length) {
       children.push(
         new Paragraph({
-          bullet: { level: 0 },
-          children: [new TextRun(ach)],
+          children: [new TextRun({ text: `Stack: ${exp.stack.join(", ")}`, italics: true })],
         }),
+      );
+    }
+    for (const ach of exp.achievements) {
+      children.push(
+        new Paragraph({ bullet: { level: 0 }, children: [new TextRun(ach)] }),
+      );
+    }
+    for (const r of exp.responsibilities ?? []) {
+      children.push(
+        new Paragraph({ bullet: { level: 0 }, children: [new TextRun(r)] }),
       );
     }
   }
@@ -95,6 +114,9 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
         children: [new TextRun({ text: proj.name, bold: true })],
       }),
     );
+    if (proj.description) {
+      children.push(new Paragraph({ children: [new TextRun(proj.description)] }));
+    }
     children.push(
       new Paragraph({
         children: [new TextRun({ text: proj.stack.join(", "), italics: true })],
@@ -106,19 +128,19 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
       );
     }
   }
+  children.push(new Paragraph({ text: "" }));
 
   if (resume.certifications.length) {
-    children.push(new Paragraph({ text: "" }));
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: "Certifications" }),
     );
     for (const c of resume.certifications) {
       children.push(new Paragraph({ text: `${c.name} — ${c.issuer}` }));
     }
+    children.push(new Paragraph({ text: "" }));
   }
 
   if (resume.education.length) {
-    children.push(new Paragraph({ text: "" }));
     children.push(new Paragraph({ heading: HeadingLevel.HEADING_1, text: "Education" }));
     for (const edu of resume.education) {
       children.push(
@@ -127,29 +149,43 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
         }),
       );
     }
+    children.push(new Paragraph({ text: "" }));
+  }
+
+  if (resume.openSource) {
+    children.push(
+      new Paragraph({ heading: HeadingLevel.HEADING_1, text: "Open Source" }),
+    );
+    if (resume.openSource.githubUsername) {
+      children.push(
+        new Paragraph({ text: `github.com/${resume.openSource.githubUsername}` }),
+      );
+    }
+    for (const h of resume.openSource.highlights ?? []) {
+      children.push(new Paragraph({ bullet: { level: 0 }, children: [new TextRun(h)] }));
+    }
+    children.push(new Paragraph({ text: "" }));
+  }
+
+  if (resume.languages.length) {
+    children.push(new Paragraph({ heading: HeadingLevel.HEADING_1, text: "Languages" }));
+    for (const lang of resume.languages) {
+      children.push(new Paragraph({ text: `${lang.name} — ${lang.level}` }));
+    }
   }
 
   const doc = new Document({
-    sections: [
-      {
-        properties: {},
-        children,
-      },
-    ],
-    styles: {
-      paragraphStyles: [
-        {
-          id: "Normal",
-          name: "Normal",
-          basedOn: "Normal",
-          run: { font: "Inter" },
-          paragraph: {
-            spacing: { line: 276 },
-          },
-        },
-      ],
-    },
+    sections: [{ properties: {}, children }],
   });
 
   return Packer.toBlob(doc);
+}
+
+export function downloadDocx(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
 }

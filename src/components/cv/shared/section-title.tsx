@@ -10,19 +10,30 @@ export function SectionTitle({
   variant?: "default" | "sidebar" | "compact";
 }) {
   return (
-    <h2
-      className={cn(
-        "font-semibold tracking-tight text-[var(--cv-fg)]",
-        variant === "default" &&
-          "text-sm uppercase tracking-widest text-cv-muted mb-3 pb-2 border-b border-cv",
-        variant === "sidebar" &&
-          "text-xs uppercase tracking-widest text-cv-accent mb-3",
-        variant === "compact" &&
-          "text-xs uppercase tracking-wider text-cv-muted mb-2",
-        className,
+    <div className={cn("mb-3", variant === "compact" && "mb-2")}>
+      <h2
+        className={cn(
+          "font-semibold tracking-tight text-[var(--cv-fg)] flex items-center gap-2",
+          variant === "default" &&
+            "text-xs uppercase tracking-[0.2em] text-cv-muted",
+          variant === "sidebar" &&
+            "text-[10px] uppercase tracking-[0.25em] text-cv-accent font-mono",
+          variant === "compact" &&
+            "text-[10px] uppercase tracking-wider text-cv-muted font-mono",
+          className,
+        )}
+      >
+        <span
+          className={cn(
+            "h-1 w-1 rounded-full shrink-0",
+            variant === "sidebar" ? "bg-electric-500" : "bg-electric-500/70",
+          )}
+        />
+        {children}
+      </h2>
+      {variant === "default" && (
+        <div className="mt-2 h-px w-full bg-gradient-to-r from-electric-500/40 via-cv-border to-transparent" />
       )}
-    >
-      {children}
-    </h2>
+    </div>
   );
 }

@@ -35,22 +35,34 @@ export function CVRenderer({
   const Wrapper = animate ? motion.div : "div";
   const motionProps = animate
     ? {
-        initial: { opacity: 0, y: 8 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] as const },
+        initial: { opacity: 0, y: 12, scale: 0.995 },
+        animate: { opacity: 1, y: 0, scale: 1 },
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
       }
     : {};
 
   return (
-    <Wrapper
-      id={id}
-      className={cn(
-        "cv-paper rounded-lg border border-cv shadow-sm p-8 md:p-10 print:shadow-none print:border-0 print:p-0",
-        className,
-      )}
-      {...motionProps}
-    >
-      {content}
-    </Wrapper>
+    <div className="relative">
+      {/* Glow behind CV paper */}
+      <div
+        className="absolute -inset-1 rounded-2xl bg-gradient-to-b from-electric-500/10 via-transparent to-emerald-500/5 blur-xl pointer-events-none print:hidden"
+        aria-hidden
+      />
+      <Wrapper
+        id={id}
+        className={cn(
+          "cv-paper relative rounded-xl border border-cv/80",
+          "shadow-cv-preview p-8 md:p-10",
+          "print:shadow-none print:border-0 print:rounded-none print:p-0",
+          "before:absolute before:top-0 before:left-0 before:right-0 before:h-[2px]",
+          "before:bg-gradient-to-r before:from-transparent before:via-electric-500/60 before:to-transparent",
+          "before:rounded-t-xl before:print:hidden",
+          className,
+        )}
+        {...motionProps}
+      >
+        {content}
+      </Wrapper>
+    </div>
   );
 }

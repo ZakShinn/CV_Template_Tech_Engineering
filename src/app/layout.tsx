@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { appConfig } from "@/data/config";
 import "./globals.css";
 
 const inter = Inter({
@@ -16,9 +17,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tech Engineering CV — Professional Resume Templates",
+  title: appConfig.title,
   description:
-    "Modern ATS-friendly CV templates for Software Engineers, DevOps, Cloud, AI/ML, and Security roles.",
+    "CV kỹ thuật — Software Engineer, DevOps, Cloud, AI/ML. Nội dung cấu hình trong src/data.",
 };
 
 export default function RootLayout({

@@ -31,7 +31,8 @@ export function ProjectsSection({
             key={proj.id}
             className={cn(
               "print-break-avoid rounded-md border border-cv p-3",
-              proj.featured && "border-electric-500/30 bg-cv-accent-soft/30",
+              proj.featured &&
+                "border-electric-500/40 bg-gradient-to-br from-electric-500/10 to-transparent shadow-[inset_0_1px_0_rgba(94,179,255,0.1)]",
             )}
           >
             <div className="flex flex-wrap items-center gap-2">
