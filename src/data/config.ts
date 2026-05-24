@@ -22,4 +22,9 @@ export const appConfig = {
 
   /** Tên file khi export PDF/DOCX/JSON */
   exportFilenamePrefix: "CV",
+
+  /** SEO & chia sẻ link */
+  siteUrl: "https://your-cv.vercel.app",
+  description:
+    "CV kỹ thuật — Software Engineer, DevOps, Cloud. Tối ưu ATS, responsive, export PDF/DOCX.",
 } as const;

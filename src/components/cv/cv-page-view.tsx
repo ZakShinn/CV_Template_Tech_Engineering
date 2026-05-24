@@ -1,16 +1,28 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CVRenderer } from "@/components/cv/cv-renderer";
 import { ExportActions } from "@/components/cv/export-actions";
+import { LayoutSwitcher } from "@/components/cv/layout-switcher";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { TechBackground } from "@/components/ui/tech-background";
 import { appConfig } from "@/data/config";
-import type { Resume } from "@/lib/schema/resume";
+import type { LayoutType, Resume } from "@/lib/schema/resume";
 
 /** Trang xem CV — zoom x2 màn hình; bản in riêng scale 1:1 */
 export function CvPageView({ resume }: { resume: Resume }) {
   const scale = appConfig.browserDisplayScale;
+  const [layout, setLayout] = useState<LayoutType>(resume.meta.layout);
+
+  const displayResume = useMemo(
+    () => ({ ...resume, meta: { ...resume.meta, layout } }),
+    [resume, layout],
+  );
+
+  useEffect(() => {
+    document.documentElement.lang = resume.meta.locale ?? "en";
+  }, [resume.meta.locale]);
 
   return (
     <div
@@ -36,7 +48,8 @@ export function CvPageView({ resume }: { resume: Resume }) {
             </span>
           </motion.div>
           <div className="flex items-center gap-2 shrink-0">
-            <ExportActions resume={resume} />
+            <LayoutSwitcher value={layout} onChange={setLayout} />
+            <ExportActions resume={displayResume} />
             <ThemeToggle />
           </div>
         </div>
@@ -51,14 +64,14 @@ export function CvPageView({ resume }: { resume: Resume }) {
           transition={{ duration: 0.45, delay: 0.08 }}
         >
           <div className="cv-scale-viewport">
-            <CVRenderer resume={resume} animate id="cv-preview" />
+            <CVRenderer resume={displayResume} animate id="cv-preview" />
           </div>
         </motion.div>
       </main>
 
       {/* In: bản 1:1, không zoom — ẩn trên màn hình */}
       <div className="cv-print-only" aria-hidden>
-        <CVRenderer resume={resume} animate={false} id="cv-print" />
+        <CVRenderer resume={displayResume} animate={false} id="cv-print" />
       </div>
     </div>
   );

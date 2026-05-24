@@ -1,12 +1,15 @@
 import { SectionTitle } from "@/components/cv/shared/section-title";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import type { Resume } from "@/lib/schema/resume";
 
 export function CertificationsSection({
   certifications,
   variant = "default",
+  locale = "en",
 }: {
   certifications: Resume["certifications"];
   variant?: "default" | "sidebar" | "compact";
+  locale?: CVLocale;
 }) {
   if (!certifications.length) return null;
 
@@ -17,7 +20,7 @@ export function CertificationsSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="certs-heading">Certifications</span>
+        <span id="certs-heading">{getSectionLabel(locale, "certifications")}</span>
       </SectionTitle>
       <ul className="space-y-2">
         {certifications.map((cert) => (

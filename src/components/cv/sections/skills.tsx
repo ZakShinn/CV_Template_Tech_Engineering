@@ -1,5 +1,6 @@
 import { ProficiencyDots } from "@/components/cv/shared/proficiency-dots";
 import { SectionTitle } from "@/components/cv/shared/section-title";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import type { SkillCategory } from "@/lib/schema/resume";
 import { cn } from "@/lib/utils";
 
@@ -7,10 +8,12 @@ export function SkillsSection({
   skills,
   variant = "default",
   compact = false,
+  locale = "en",
 }: {
   skills: SkillCategory[];
   variant?: "default" | "sidebar" | "compact";
   compact?: boolean;
+  locale?: CVLocale;
 }) {
   return (
     <section className="print-break-avoid" aria-labelledby="skills-heading">
@@ -19,7 +22,7 @@ export function SkillsSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="skills-heading">Technical Skills</span>
+        <span id="skills-heading">{getSectionLabel(locale, "skills")}</span>
       </SectionTitle>
       <div className={cn("space-y-4", compact && "space-y-3")}>
         {skills.map((cat) => (

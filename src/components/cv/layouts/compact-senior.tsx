@@ -5,7 +5,11 @@ import type { Resume } from "@/lib/schema/resume";
 /** Dense layout for senior engineers with extensive experience */
 export function CompactSenior({ resume }: { resume: Resume }) {
   return (
-    <article className="cv-paper max-w-[210mm] mx-auto text-[13px] leading-snug">
+    <article
+      className="cv-paper max-w-[210mm] mx-auto text-[13px] leading-snug"
+      itemScope
+      itemType="https://schema.org/Person"
+    >
       <CVHeader personal={resume.personal} variant="compact" />
 
       <div className="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-6 md:gap-8">

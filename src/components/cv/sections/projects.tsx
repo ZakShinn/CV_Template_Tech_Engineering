@@ -1,5 +1,6 @@
 import { ExternalLink, Github } from "lucide-react";
 import { SectionTitle } from "@/components/cv/shared/section-title";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import type { Project } from "@/lib/schema/resume";
 import { cn } from "@/lib/utils";
 
@@ -7,10 +8,12 @@ export function ProjectsSection({
   projects,
   variant = "default",
   compact = false,
+  locale = "en",
 }: {
   projects: Project[];
   variant?: "default" | "sidebar" | "compact";
   compact?: boolean;
+  locale?: CVLocale;
 }) {
   const sorted = [...projects].sort(
     (a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0),
@@ -23,7 +26,7 @@ export function ProjectsSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="projects-heading">Projects</span>
+        <span id="projects-heading">{getSectionLabel(locale, "projects")}</span>
       </SectionTitle>
       <div className={cn("space-y-4", compact && "space-y-3")}>
         {sorted.map((proj) => (

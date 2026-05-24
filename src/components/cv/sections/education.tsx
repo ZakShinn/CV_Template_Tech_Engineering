@@ -1,12 +1,15 @@
 import { SectionTitle } from "@/components/cv/shared/section-title";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import type { Resume } from "@/lib/schema/resume";
 
 export function EducationSection({
   education,
   variant = "default",
+  locale = "en",
 }: {
   education: Resume["education"];
   variant?: "default" | "sidebar" | "compact";
+  locale?: CVLocale;
 }) {
   return (
     <section className="print-break-avoid" aria-labelledby="education-heading">
@@ -15,7 +18,7 @@ export function EducationSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="education-heading">Education</span>
+        <span id="education-heading">{getSectionLabel(locale, "education")}</span>
       </SectionTitle>
       <div className="space-y-3">
         {education.map((edu) => (

@@ -1,5 +1,6 @@
 import { SectionTitle } from "@/components/cv/shared/section-title";
 import type { Experience } from "@/lib/schema/resume";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import { cn } from "@/lib/utils";
 
 function formatDateRange(exp: Experience) {
@@ -12,10 +13,12 @@ export function ExperienceSection({
   experience,
   variant = "default",
   compact = false,
+  locale = "en",
 }: {
   experience: Experience[];
   variant?: "default" | "sidebar" | "compact";
   compact?: boolean;
+  locale?: CVLocale;
 }) {
   return (
     <section aria-labelledby="experience-heading">
@@ -24,7 +27,7 @@ export function ExperienceSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="experience-heading">Work Experience</span>
+        <span id="experience-heading">{getSectionLabel(locale, "experience")}</span>
       </SectionTitle>
       <div className="space-y-5">
         {experience.map((exp) => (

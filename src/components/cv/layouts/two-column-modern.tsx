@@ -29,7 +29,11 @@ export function TwoColumnModern({ resume }: { resume: Resume }) {
       : SIDEBAR_SECTIONS.filter((id) => order.includes(id));
 
   return (
-    <article className="cv-paper max-w-[210mm] mx-auto">
+    <article
+      className="cv-paper max-w-[210mm] mx-auto"
+      itemScope
+      itemType="https://schema.org/Person"
+    >
       <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-8 lg:gap-10">
         <aside className="space-y-6 lg:border-r border-cv lg:pr-8 print:break-inside-avoid lg:bg-gradient-to-b lg:from-cv-muted/[0.06] lg:to-transparent">
           <CVHeader personal={resume.personal} variant="sidebar" />

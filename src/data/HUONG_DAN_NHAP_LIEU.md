@@ -28,8 +28,11 @@ Chọn layout trong `resume.meta.layout` hoặc `config.defaultLayout`.
 
 ## Xuất file
 
-- **In CV** — khổ A4, bản in scale 1:1 (không bị zoom ×2 như màn hình).
-- **DOCX** — xuất từ dữ liệu `resume.ts`, phù hợp gửi email / upload portal.
+| Nút | Chức năng |
+|-----|-----------|
+| **In CV** | Hộp thoại in A4 (scale 1:1, không zoom ×2) |
+| **PDF** | Tải PDF từ bản in 1:1 (`#cv-print`) |
+| **DOCX** | Tải Word từ dữ liệu `resume.ts` |
 
 ## Ngôn ngữ
 

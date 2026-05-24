@@ -1,13 +1,16 @@
 import { Github } from "lucide-react";
 import { SectionTitle } from "@/components/cv/shared/section-title";
+import { getSectionLabel, type CVLocale } from "@/i18n/section-labels";
 import type { Resume } from "@/lib/schema/resume";
 
 export function OpenSourceSection({
   openSource,
   variant = "default",
+  locale = "en",
 }: {
   openSource?: Resume["openSource"];
   variant?: "default" | "sidebar" | "compact";
+  locale?: CVLocale;
 }) {
   if (!openSource) return null;
 
@@ -20,7 +23,7 @@ export function OpenSourceSection({
           variant === "sidebar" ? "sidebar" : variant === "compact" ? "compact" : "default"
         }
       >
-        <span id="oss-heading">Open Source</span>
+        <span id="oss-heading">{getSectionLabel(locale, "openSource")}</span>
       </SectionTitle>
       {githubUsername && (
         <p className="text-sm flex items-center gap-2 text-cv-muted mb-3">

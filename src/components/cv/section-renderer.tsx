@@ -1,4 +1,5 @@
 import type { Resume, SectionId } from "@/lib/schema/resume";
+import type { CVLocale } from "@/i18n/section-labels";
 import { CertificationsSection } from "@/components/cv/sections/certifications";
 import { EducationSection } from "@/components/cv/sections/education";
 import { ExperienceSection } from "@/components/cv/sections/experience";
@@ -30,13 +31,14 @@ export function SectionRenderer({
   compact?: boolean;
 }) {
   const v = variant;
+  const locale: CVLocale = resume.meta.locale === "vi" ? "vi" : "en";
 
   switch (sectionId) {
     case "summary":
-      return <SummarySection summary={resume.summary} variant={v} />;
+      return <SummarySection summary={resume.summary} variant={v} locale={locale} />;
     case "skills":
       return (
-        <SkillsSection skills={resume.skills} variant={v} compact={compact} />
+        <SkillsSection skills={resume.skills} variant={v} compact={compact} locale={locale} />
       );
     case "experience":
       return (
@@ -44,20 +46,21 @@ export function SectionRenderer({
           experience={resume.experience}
           variant={v}
           compact={compact}
+          locale={locale}
         />
       );
     case "projects":
       return (
-        <ProjectsSection projects={resume.projects} variant={v} compact={compact} />
+        <ProjectsSection projects={resume.projects} variant={v} compact={compact} locale={locale} />
       );
     case "certifications":
-      return <CertificationsSection certifications={resume.certifications} variant={v} />;
+      return <CertificationsSection certifications={resume.certifications} variant={v} locale={locale} />;
     case "education":
-      return <EducationSection education={resume.education} variant={v} />;
+      return <EducationSection education={resume.education} variant={v} locale={locale} />;
     case "opensource":
-      return <OpenSourceSection openSource={resume.openSource} variant={v} />;
+      return <OpenSourceSection openSource={resume.openSource} variant={v} locale={locale} />;
     case "languages":
-      return <LanguagesSection languages={resume.languages} variant={v} />;
+      return <LanguagesSection languages={resume.languages} variant={v} locale={locale} />;
     default:
       return null;
   }

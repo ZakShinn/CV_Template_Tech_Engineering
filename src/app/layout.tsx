@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { getThemeCssBlock } from "@/color/theme";
 import { getFontCssBlock } from "@/font/config";
 import { appConfig } from "@/data/config";
+import { defaultResume } from "@/data/resume";
+import { buildPersonJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -20,9 +22,28 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: appConfig.title,
-  description:
-    "CV kỹ thuật — Software Engineer, DevOps, Cloud, AI/ML. Nội dung cấu hình trong src/data.",
+  description: appConfig.description,
+  metadataBase: new URL(appConfig.siteUrl),
+  openGraph: {
+    title: appConfig.title,
+    description: appConfig.description,
+    type: "website",
+    url: appConfig.siteUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: appConfig.title,
+    description: appConfig.description,
+  },
+  robots: { index: true, follow: true },
 };
+
+const personJsonLd = buildPersonJsonLd({
+  name: defaultResume.personal.fullName,
+  jobTitle: defaultResume.personal.title,
+  email: defaultResume.personal.contact.email,
+  url: defaultResume.personal.contact.portfolio,
+});
 
 export default function RootLayout({
   children,
@@ -30,8 +51,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={defaultResume.meta.locale} suppressHydrationWarning>
       <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         <style
           dangerouslySetInnerHTML={{
             __html: `${getThemeCssBlock()}\n${getFontCssBlock()}`,
