@@ -152,6 +152,8 @@ function cleanContact(contact: Resume["personal"]["contact"]): Resume["personal"
   };
 }
 
+import { isCvSectionEnabled } from "@/config";
+
 /** Section có dữ liệu để hiển thị không */
 export function hasSectionContent(resume: Resume, sectionId: SectionId): boolean {
   switch (sectionId) {
@@ -176,6 +178,15 @@ export function hasSectionContent(resume: Resume, sectionId: SectionId): boolean
   }
 }
 
+/** Section được bật trong config và còn dữ liệu */
+export function shouldRenderSection(
+  resume: Resume,
+  sectionId: SectionId,
+): boolean {
+  if (!isCvSectionEnabled(sectionId)) return false;
+  return hasSectionContent(resume, sectionId);
+}
+
 /** Chỉ giữ section còn nội dung + thứ tự hợp lệ */
 export function resolveSectionOrder(
   resume: Resume,
@@ -187,14 +198,14 @@ export function resolveSectionOrder(
 
   for (const id of base) {
     if (seen.has(id)) continue;
-    if (!hasSectionContent(resume, id)) continue;
+    if (!shouldRenderSection(resume, id)) continue;
     seen.add(id);
     ordered.push(id);
   }
 
   for (const id of DEFAULT_SECTION_ORDER) {
     if (seen.has(id)) continue;
-    if (!hasSectionContent(resume, id)) continue;
+    if (!shouldRenderSection(resume, id)) continue;
     seen.add(id);
     ordered.push(id);
   }

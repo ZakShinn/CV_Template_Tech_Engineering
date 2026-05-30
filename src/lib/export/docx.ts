@@ -6,7 +6,7 @@ import {
   HeadingLevel,
 } from "docx";
 import type { Resume } from "@/lib/schema/resume";
-import { hasSectionContent } from "@/lib/resume-normalize";
+import { shouldRenderSection } from "@/lib/resume-normalize";
 import { getSectionLabel, getUiString } from "@/i18n/section-labels";
 
 export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
@@ -54,7 +54,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "summary")) {
+  if (shouldRenderSection(resume, "summary")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "summary") }),
       new Paragraph({ children: [new TextRun(resume.summary)] }),
@@ -62,7 +62,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     );
   }
 
-  if (hasSectionContent(resume, "skills")) {
+  if (shouldRenderSection(resume, "skills")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "skills") }),
     );
@@ -79,7 +79,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "experience")) {
+  if (shouldRenderSection(resume, "experience")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "experience") }),
     );
@@ -121,7 +121,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "projects")) {
+  if (shouldRenderSection(resume, "projects")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "projects") }),
     );
@@ -150,7 +150,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "certifications")) {
+  if (shouldRenderSection(resume, "certifications")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "certifications") }),
     );
@@ -160,7 +160,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "education")) {
+  if (shouldRenderSection(resume, "education")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "education") }),
     );
@@ -175,7 +175,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "opensource") && resume.openSource) {
+  if (shouldRenderSection(resume, "opensource") && resume.openSource) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "openSource") }),
     );
@@ -190,7 +190,7 @@ export async function exportResumeToDocx(resume: Resume): Promise<Blob> {
     children.push(new Paragraph({ text: "" }));
   }
 
-  if (hasSectionContent(resume, "languages")) {
+  if (shouldRenderSection(resume, "languages")) {
     children.push(
       new Paragraph({ heading: HeadingLevel.HEADING_1, text: getSectionLabel(locale, "languages") }),
     );

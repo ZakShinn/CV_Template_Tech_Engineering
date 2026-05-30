@@ -69,8 +69,9 @@ Export từ file này: `defaultResume`, `buildResume()`.
 
 Xem **`config.ts`** (bảng chú thích đầu file):
 
-- **`features`**: bật/tắt UI (nền, nút theme/layout/ngôn ngữ, export, QR) — **không** ẩn section Summary/Experience/…
-- **Section CV**: để mảng rỗng hoặc xoá nội dung trong `resume-basic.ts` / `resume-advanced.ts` (section rỗng tự ẩn).
+- **`sections`**: bật/tắt danh mục CV (Summary, Skills, Experience, Projects…) — áp dụng web, in, PDF, DOCX. Dữ liệu vẫn giữ trong `resume-*.ts`.
+- **`features`**: bật/tắt UI (nền, nút theme/layout/ngôn ngữ, export, QR).
+- Danh mục bật nhưng rỗng vẫn tự ẩn khi build (`normalizeResume`).
 
 **Chặn Google tìm kiếm CV:** trong `config.ts` đặt `blockSearchIndexing: true` (mặc định). Trang gửi `noindex`, `robots.txt` chặn crawl, và header `X-Robots-Tag`. Muốn SEO công khai → đặt `false`.
 
